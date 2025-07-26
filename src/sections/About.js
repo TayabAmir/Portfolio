@@ -166,7 +166,7 @@ const About = () => {
                             onTouchEnd={onTouchEnd}
                         >
                             {/* Slides */}
-                            <div className="relative h-80 sm:h-72 md:h-64">
+                            <div className="relative h-75 sm:h-80 md:h-72 lg:h-64">
                                 {slides.map((slide, index) => (
                                     <div
                                         key={index}
@@ -177,16 +177,18 @@ const About = () => {
                                                 : 'opacity-0 translate-x-full scale-95'
                                             }`}
                                     >
-                                        <div className="h-full flex flex-col justify-center items-center p-6 sm:p-8 md:p-12">
+                                        <div className="h-full flex flex-col justify-center items-center p-4 sm:p-6 md:p-8 lg:p-12">
                                             {/* Title */}
-                                            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
+                                            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-3 sm:mb-4 md:mb-6 text-center leading-tight">
                                                 {slide.title}
                                             </h3>
 
                                             {/* Content */}
-                                            <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto text-justify hyphens-auto" style={{ textAlignLast: 'center' }}>
-                                                {slide.content}
-                                            </p>
+                                            <div className="w-full max-w-2xl mx-auto">
+                                                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed text-center sm:text-justify break-words">
+                                                    {slide.content}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}

@@ -1,13 +1,35 @@
-import React from 'react'
-import { Menu, X, Download, ExternalLink, Github, Linkedin, Mail, Phone, MapPin, Code, Award, User, Briefcase } from 'lucide-react';
+'use client'
+import React, { useState, useEffect } from 'react'
+import { Menu, X, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const NavigationBar = ({ isMenuOpen, setIsMenuOpen }) => {
+const NavigationBar = ({ isMenuOpen, setIsMenuOpen, scrolled }) => {
+    const [activeSection, setActiveSection] = useState('home');
+
     const navItems = [
-        { id: 'home', label: 'Home', icon: User },
-        { id: 'about', label: 'About', icon: User },
-        { id: 'projects', label: 'Projects', icon: Code },
-        { id: 'contact', label: 'Contact', icon: Mail }
+        { id: 'home', label: 'Home' },
+        { id: 'about', label: 'About' },
+        { id: 'projects', label: 'Projects' },
+        { id: 'contact', label: 'Contact' }
     ];
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const sections = navItems.map(item => item.id);
+            const current = sections.find(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    return rect.top <= 100 && rect.bottom >= 100;
+                }
+                return false;
+            });
+            if (current) setActiveSection(current);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -15,52 +37,101 @@ const NavigationBar = ({ isMenuOpen, setIsMenuOpen }) => {
         }
         setIsMenuOpen(false);
     };
+
     return (
-        <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-blue-100 z-50">
+        <motion.nav 
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+                scrolled 
+                    ? 'bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-200/50' 
+                    : 'bg-white/60 backdrop-blur-md border-b border-transparent'
+            }`}
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center py-4">
-                    <div className="text-2xl font-bold text-blue-600">
-                        Muhammad Tayyab
-                    </div>
+                    <motion.div 
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="flex items-center gap-2 cursor-pointer group"
+                        onClick={() => scrollToSection('home')}
+                    >
+                        <Sparkles className="text-blue-600 w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                        <span className="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+                            Muhammad Tayyab
+                        </span>
+                    </motion.div>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex space-x-8">
-                        {navItems.map((item) => (
-                            <button
+                    <div className="hidden md:flex space-x-2">
+                        {navItems.map((item, index) => (
+                            <motion.button
                                 key={item.id}
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.1 * index }}
                                 onClick={() => scrollToSection(item.id)}
-                                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                                className={`relative px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                                    activeSection === item.id
+                                        ? 'text-blue-600'
+                                        : 'text-gray-700 hover:text-blue-600'
+                                }`}
                             >
                                 {item.label}
-                            </button>
+                                {activeSection === item.id && (
+                                    <motion.div
+                                        layoutId="navbar-indicator"
+                                        className="absolute inset-0 bg-blue-50 rounded-lg -z-10"
+                                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                                    />
+                                )}
+                            </motion.button>
                         ))}
                     </div>
 
                     {/* Mobile menu button */}
-                    <button
-                        className="md:hidden text-gray-700"
+                    <motion.button
+                        whileTap={{ scale: 0.9 }}
+                        className="md:hidden text-gray-700 p-2 hover:bg-blue-50 rounded-lg transition-colors duration-200"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+                    </motion.button>
                 </div>
 
                 {/* Mobile Navigation */}
-                {isMenuOpen && (
-                    <div className="md:hidden bg-white border-t border-blue-100">
-                        {navItems.map((item) => (
-                            <button
-                                key={item.id}
-                                onClick={() => scrollToSection(item.id)}
-                                className="block w-full text-left px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200"
-                            >
-                                {item.label}
-                            </button>
-                        ))}
-                    </div>
-                )}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="md:hidden overflow-hidden bg-white/95 backdrop-blur-xl rounded-b-2xl border-t border-gray-100"
+                        >
+                            {navItems.map((item, index) => (
+                                <motion.button
+                                    key={item.id}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.3, delay: 0.1 * index }}
+                                    onClick={() => scrollToSection(item.id)}
+                                    className={`block w-full text-left px-6 py-4 transition-all duration-200 ${
+                                        activeSection === item.id
+                                            ? 'text-blue-600 bg-blue-50 font-semibold'
+                                            : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50/50'
+                                    }`}
+                                >
+                                    {item.label}
+                                </motion.button>
+                            ))}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
-        </nav>
+        </motion.nav>
     )
 }
 

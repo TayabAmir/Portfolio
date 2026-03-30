@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Hero from '@/sections/Hero';
 import NavigationBar from './components/navbar';
 import About from '@/sections/About';
+import Experience from '@/sections/Experience';
 import Projects from '@/sections/Projects';
 import Contact from '@/sections/Contact';
 import Footer from './components/Footer';
@@ -26,6 +27,7 @@ export default function Home() {
               <Hero setIsMenuOpen={setIsMenuOpen} />
             </div>
             <About />
+            <Experience />
             <Projects />
             <Contact/>
             <Footer/>

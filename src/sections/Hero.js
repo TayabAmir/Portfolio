@@ -30,7 +30,7 @@ export default function Hero({ setIsMenuOpen }) {
           >
             <div className="relative w-40 h-40 mx-auto mb-6">
               <motion.div
-                animate={{ rotate: 360 }}
+                // animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                 className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-1"
               >

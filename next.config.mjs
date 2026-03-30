@@ -10,9 +10,6 @@ const nextConfig = {
   },
   
   // Compiler optimizations
-  swcMinify: true,
-  
-  // Reduce bundle size
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },

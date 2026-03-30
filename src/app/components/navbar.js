@@ -9,6 +9,7 @@ const NavigationBar = ({ isMenuOpen, setIsMenuOpen, scrolled }) => {
     const navItems = [
         { id: 'home', label: 'Home' },
         { id: 'about', label: 'About' },
+        { id: 'experience', label: 'Experience' },
         { id: 'projects', label: 'Projects' },
         { id: 'contact', label: 'Contact' }
     ];
@@ -73,7 +74,7 @@ const NavigationBar = ({ isMenuOpen, setIsMenuOpen, scrolled }) => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.1 * index }}
                                 onClick={() => scrollToSection(item.id)}
-                                className={`relative px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                                className={`relative cursor-pointer px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                                     activeSection === item.id
                                         ? 'text-blue-600'
                                         : 'text-gray-700 hover:text-blue-600'
@@ -118,7 +119,7 @@ const NavigationBar = ({ isMenuOpen, setIsMenuOpen, scrolled }) => {
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.3, delay: 0.1 * index }}
                                     onClick={() => scrollToSection(item.id)}
-                                    className={`block w-full text-left px-6 py-4 transition-all duration-200 ${
+                                    className={`block w-full cursor-pointer text-left px-6 py-4 transition-all duration-200 ${
                                         activeSection === item.id
                                             ? 'text-blue-600 bg-blue-50 font-semibold'
                                             : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50/50'

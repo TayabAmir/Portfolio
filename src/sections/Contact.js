@@ -5,7 +5,7 @@ import { motion, useInView } from 'framer-motion';
 
 const Contact = () => {
     const sectionRef = useRef(null);
-    const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+    const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
     return (
         <section ref={sectionRef} id="contact" className="py-24 bg-gradient-to-b from-white via-blue-50/30 to-white relative overflow-hidden">

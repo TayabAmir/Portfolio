@@ -6,7 +6,7 @@ import { useRef } from 'react';
 
 const About = () => {
     const sectionRef = useRef(null);
-    const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+    const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
     // Achievements data
     const achievements = [
@@ -90,7 +90,6 @@ const About = () => {
 
     return (
         <section ref={sectionRef} id="about" className="py-24 bg-gradient-to-b from-white via-blue-50/30 to-white relative overflow-hidden">
-            {/* Simplified Background - Less animated elements for performance */}
             <div className="absolute top-20 right-10 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
             <div className="absolute bottom-20 left-10 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
 

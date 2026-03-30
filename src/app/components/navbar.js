@@ -34,9 +34,18 @@ const NavigationBar = ({ isMenuOpen, setIsMenuOpen, scrolled }) => {
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            const navbarHeight = 80;
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - navbarHeight;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
-        setIsMenuOpen(false);
+        if (setIsMenuOpen) {
+            setIsMenuOpen(false);
+        }
     };
 
     return (
@@ -106,27 +115,28 @@ const NavigationBar = ({ isMenuOpen, setIsMenuOpen, scrolled }) => {
                 <AnimatePresence>
                     {isMenuOpen && (
                         <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="md:hidden overflow-hidden bg-white/95 backdrop-blur-xl rounded-b-2xl border-t border-gray-100"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            className="md:hidden bg-white/95 backdrop-blur-xl rounded-b-2xl border-t border-gray-100 py-2"
                         >
                             {navItems.map((item, index) => (
-                                <motion.button
+                                <button
                                     key={item.id}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.3, delay: 0.1 * index }}
-                                    onClick={() => scrollToSection(item.id)}
-                                    className={`block w-full cursor-pointer text-left px-6 py-4 transition-all duration-200 ${
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        scrollToSection(item.id);
+                                    }}
+                                    className={`block w-full text-left px-6 py-4 transition-all duration-200 ${
                                         activeSection === item.id
                                             ? 'text-blue-600 bg-blue-50 font-semibold'
                                             : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50/50'
                                     }`}
                                 >
                                     {item.label}
-                                </motion.button>
+                                </button>
                             ))}
                         </motion.div>
                     )}

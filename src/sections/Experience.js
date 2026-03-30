@@ -24,7 +24,7 @@ const Experience = () => {
             logo: "/codevdigital_logo.jpeg",
             position: "Developer",
             duration: "Aug '25 — Oct '25",
-            location: "Lahore, Pakistan",
+            location: "Remote",
             description: "Responsible for developing and maintaining both frontend and backend features and their seamless integration, while ensuring smooth functionality, performance, and user experience across the applications.",
             gradient: "from-purple-500 to-pink-500",
             tags: ["Full Stack", "Next.js", "Node.js", "API Development"]
@@ -38,7 +38,7 @@ const Experience = () => {
     };
 
     return (
-        <section ref={sectionRef} id="experience" className="py-4 bg-gradient-to-b from-white via-purple-50/20 to-white relative overflow-hidden">
+        <section ref={sectionRef} id="experience" className="py-6 bg-gradient-to-b from-white via-purple-50/20 to-white relative overflow-hidden">
             {/* Background decorations */}
             <div className="absolute top-20 left-10 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
             <div className="absolute bottom-20 right-10 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>

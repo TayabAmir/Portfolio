@@ -89,7 +89,7 @@ const About = () => {
     };
 
     return (
-        <section ref={sectionRef} id="about" className="py-24 bg-gradient-to-b from-white via-blue-50/30 to-white relative overflow-hidden">
+        <section ref={sectionRef} id="about" className="pt-16 lg:pt-24 bg-gradient-to-b from-white via-blue-50/30 to-white relative overflow-hidden">
             <div className="absolute top-20 right-10 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
             <div className="absolute bottom-20 left-10 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
 
